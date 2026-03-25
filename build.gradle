@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'maven-publish'
     id "com.github.ben-manes.versions" version "0.52.0"
     id 'com.google.protobuf' version '0.9.4'
 }
@@ -54,6 +55,16 @@ tasks.jar {
     processResources {
         inputs.property('version', version)
         expand('version': version)
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            groupId = project.findProperty('group') ?: 'github.diff.strazzere.rednaga'
+            artifactId = 'axmlprinter'
+        }
     }
 }
 
